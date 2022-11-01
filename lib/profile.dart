@@ -7,61 +7,107 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Profile',
-          textAlign: TextAlign.center,
+        title: const Align(
+          alignment: Alignment.center,
+          child: Text(
+            'Profile',
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
       body: Column(
         children: [
           //first expanded to contain circle avatar, name and button
-          Expanded(flex: 3, child: Container()),
-          //below coulmn contains all the text data
+          Expanded(
+            flex: 4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage('Images/man_face.jpg'),
+                  radius: 60,
+                ),
+                Text(
+                  'Geoffrey Moss',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30))),
+                    backgroundColor:
+                        MaterialStateProperty.all(Color(0xff7678ED)),
+                  ),
+                  onPressed: () {},
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 50),
+                    child: Text(
+                      'Edit profile',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          //
+          //below coulmn is for displaying student data
+          //
           Expanded(
             flex: 6,
             child: Column(
+              //Both div and textRow are defined below.
               children: [
-                Divider(
-                  color: Colors.black38,
-                  thickness: 1,
-                ),
+                Div(),
                 textRow(category: 'Student ID', answer: '78548132'),
-                Divider(
-                  color: Colors.black38,
-                  thickness: 1,
-                ),
+                Div(),
                 textRow(category: 'Course', answer: 'B.Des'),
-                Divider(
-                  color: Colors.black38,
-                  thickness: 1,
-                ),
+                Div(),
                 textRow(category: 'Class', answer: 'Section B'),
-                Divider(
-                  color: Colors.black38,
-                  thickness: 1,
-                ),
+                Div(),
                 textRow(category: 'Mobile', answer: '9038829100'),
-                Divider(
-                  color: Colors.black38,
-                  thickness: 1,
-                ),
+                Div(),
                 textRow(category: 'E-mail', answer: 'student@school.edu'),
-                Divider(
-                  color: Colors.black38,
-                  thickness: 1,
-                ),
+                Div(),
                 textRow(
                   category: 'Blood group',
                   answer: 'O+',
                 ),
-                Divider(
-                  color: Colors.black38,
-                  thickness: 1,
-                ),
+                Div(),
               ],
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+        color: Color(0xff3D348B),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.home_outlined),
+              color: Colors.white,
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.chat_bubble_outline_rounded),
+              color: Colors.white,
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.calendar_today),
+              color: Colors.white,
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.person_outlined),
+              color: Colors.white,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -81,7 +127,7 @@ class textRow extends StatelessWidget {
           Expanded(
             child: Text(
               category!,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: Colors.grey),
@@ -90,7 +136,7 @@ class textRow extends StatelessWidget {
           Expanded(
             child: Text(
               answer!,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
               ),
@@ -100,4 +146,11 @@ class textRow extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget Div() {
+  return const Divider(
+    color: Colors.black12,
+    thickness: 1,
+  );
 }
