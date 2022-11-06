@@ -1,3 +1,4 @@
+import 'package:edtech_app_demo/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
@@ -7,12 +8,24 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Align(
-          alignment: Alignment.center,
-          child: Text(
-            'Profile',
-            textAlign: TextAlign.center,
-          ),
+        toolbarHeight: 70,
+        title: Row(
+          children: [
+            Expanded(
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.menu),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                'Profile',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(child: Container())
+          ],
         ),
       ),
       body: Column(
@@ -80,35 +93,7 @@ class Profile extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-        color: Color(0xff3D348B),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.home_outlined),
-              color: Colors.white,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.chat_bubble_outline_rounded),
-              color: Colors.white,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.calendar_today),
-              color: Colors.white,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.person_outlined),
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: Bottom_Bar(), //defined in bottom_bar.dart
     );
   }
 }
