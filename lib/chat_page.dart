@@ -111,7 +111,8 @@ class myTile extends StatelessWidget {
       child: Container(
         child: ListTile(
           tileColor: Colors.white,
-          leading: CircleAvatar(backgroundImage: AssetImage(asset)),
+          leading:
+              CircleAvatar(backgroundImage: AssetImage('Images/man_face.jpg')),
           title: Text('$name'),
           subtitle: Text('$message'),
         ),

@@ -1,32 +1,15 @@
+import 'package:edtech_app_demo/NavBar.dart';
 import 'package:edtech_app_demo/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
-        toolbarHeight: 70,
-        title: Row(
-          children: [
-            Expanded(
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.menu),
-                alignment: Alignment.centerLeft,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                'Profile',
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(child: Container())
-          ],
-        ),
+        centerTitle: true,
+        title: Text('Profile'),
       ),
       body: Column(
         children: [
