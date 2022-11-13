@@ -8,73 +8,77 @@ class Profile extends StatelessWidget {
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Text('Profile'),
       ),
-      body: Column(
-        children: [
-          //first expanded to contain circle avatar, name and button
-          Expanded(
-            flex: 4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage('Images/man_face.jpg'),
-                  radius: 60,
-                ),
-                Text(
-                  'Geoffrey Moss',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                TextButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30))),
-                    backgroundColor:
-                        MaterialStateProperty.all(Color(0xff7678ED)),
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            //first expanded to contain circle avatar, name and button
+            Expanded(
+              flex: 4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage('Images/man_face.jpg'),
+                    radius: 60,
                   ),
-                  onPressed: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 50),
-                    child: Text(
-                      'Edit profile',
-                      style: TextStyle(color: Colors.white),
+                  Text(
+                    'Geoffrey Moss',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30))),
+                      backgroundColor:
+                          MaterialStateProperty.all(Color(0xff7678ED)),
                     ),
+                    onPressed: () {},
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 50),
+                      child: Text(
+                        'Edit profile',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            //
+            //below coulmn is for displaying student data
+            //
+            Expanded(
+              flex: 6,
+              child: ListView(
+                children: [
+                  Div(),
+                  textRow(category: 'Student ID', answer: '78548132'),
+                  Div(),
+                  textRow(category: 'Course', answer: 'B.Des'),
+                  Div(),
+                  textRow(category: 'Class', answer: 'Section B'),
+                  Div(),
+                  textRow(category: 'Mobile', answer: '9038829100'),
+                  Div(),
+                  textRow(category: 'E-mail', answer: 'student@school.edu'),
+                  Div(),
+                  textRow(
+                    category: 'Blood group',
+                    answer: 'O+',
                   ),
-                )
-              ],
+                  Div(),
+                ],
+              ),
             ),
-          ),
-          //
-          //below coulmn is for displaying student data
-          //
-          Expanded(
-            flex: 6,
-            child: Column(
-              //Both div and textRow are defined below.
-              children: [
-                Div(),
-                textRow(category: 'Student ID', answer: '78548132'),
-                Div(),
-                textRow(category: 'Course', answer: 'B.Des'),
-                Div(),
-                textRow(category: 'Class', answer: 'Section B'),
-                Div(),
-                textRow(category: 'Mobile', answer: '9038829100'),
-                Div(),
-                textRow(category: 'E-mail', answer: 'student@school.edu'),
-                Div(),
-                textRow(
-                  category: 'Blood group',
-                  answer: 'O+',
-                ),
-                Div(),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: Bottom_Bar(), //defined in bottom_bar.dart
     );
