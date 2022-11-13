@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'bottom_bar.dart';
+import '../bottom_bar.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({Key? key}) : super(key: key);
-
+class Chats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,18 +83,6 @@ class ChatPage extends StatelessWidget {
     );
   }
 }
-
-// ElevatedButton(
-// onPressed: () {},
-// child: Icon(
-// Icons.edit_outlined,
-// color: Colors.black26,
-// ),
-// style: ButtonStyle(
-// backgroundColor:
-// MaterialStateProperty.all(Colors.white),
-// ),
-// )
 
 class myTile extends StatelessWidget {
   final String? name;
