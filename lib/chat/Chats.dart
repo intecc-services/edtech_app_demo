@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../bottom_bar.dart';
+import '../shared/bottom_bar.dart';
 
 class Chats extends StatelessWidget {
   @override
