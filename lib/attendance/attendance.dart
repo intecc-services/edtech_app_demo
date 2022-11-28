@@ -27,10 +27,10 @@ class _AttendanceState extends State<Attendance> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 40,
+                  const SizedBox(
+                    height: 50,
                   ),
-                  Text(
+                  const Text(
                     'Attendance',
                     style: TextStyle(
                       color: Colors.white,

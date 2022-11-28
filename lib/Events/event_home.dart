@@ -54,7 +54,7 @@ Widget OverlappedSearchBar() {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
     child: CupertinoSearchTextField(
-      placeholder: 'Search events',
+      placeholder: 'Search',
       placeholderStyle: TextStyle(color: Colors.grey),
       decoration: BoxDecoration(
         boxShadow: const [
