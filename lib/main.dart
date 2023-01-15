@@ -1,4 +1,4 @@
-import 'package:edtech_app_demo/attendance/teacher_attendance.dart';
+import 'package:edtech_app_demo/Login.dart';
 import 'package:edtech_app_demo/theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class edtech_app extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: customTheme,
-      home: TeacherAttendance(),
+      home: LoginPage(),
     );
   }
 }
