@@ -9,7 +9,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class Root extends StatefulWidget {
-  const Root({super.key});
+  const Root({Key? key});
 
   @override
   State<Root> createState() => _TimetableState();

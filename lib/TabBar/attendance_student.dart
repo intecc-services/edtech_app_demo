@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class Attendance_student extends StatefulWidget {
-  const Attendance_student({super.key});
+  const Attendance_student({Key? key});
 
   @override
   State<Attendance_student> createState() => _TimetableState();
