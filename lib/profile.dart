@@ -1,4 +1,4 @@
-import 'package:edtech_app_demo/NavBar.dart';
+import 'package:edtech_app_demo/shared/NavBar.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
 import 'package:flutter/material.dart';
 

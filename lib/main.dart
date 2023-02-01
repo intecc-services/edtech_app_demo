@@ -1,5 +1,5 @@
-import 'package:edtech_app_demo/Login.dart';
-import 'package:edtech_app_demo/theme_data.dart';
+import 'package:edtech_app_demo/profile.dart';
+import 'package:edtech_app_demo/shared/theme_data.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(edtech_app());
@@ -10,7 +10,7 @@ class edtech_app extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: customTheme,
-      home: LoginPage(),
+      home: Profile(),
     );
   }
 }
