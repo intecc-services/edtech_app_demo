@@ -1,8 +1,4 @@
-import 'package:edtech_app_demo/Login.dart';
-import 'package:edtech_app_demo/NavBar.dart';
-import 'package:edtech_app_demo/profile.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
-import 'package:edtech_app_demo/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -384,12 +380,24 @@ class _LandingPageState extends State<LandingPage> {
                             // mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Graphics And Drawing Techniques",
-                                style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                    color: Colors.white),
+                              Wrap(
+                                direction: Axis.horizontal,
+                                children: [
+                                  Text(
+                                    "Graphics And Drawing Techniques",
+                                    style: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                        color: Colors.white),
+                                  )
+                                ],
+                                // child: Text(
+                                //   "Graphics And Drawing Techniques",
+                                //   style: GoogleFonts.inter(
+                                //       fontWeight: FontWeight.w600,
+                                //       fontSize: 16,
+                                //       color: Colors.white),
+                                // ),
                               ),
                               SizedBox(
                                 height: height1 * 0.015,

@@ -1,5 +1,4 @@
-import 'package:edtech_app_demo/Landing_Page.dart';
-import 'package:edtech_app_demo/shared/bottom_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,6 +12,13 @@ class _LoginPageState extends State<LoginPage> {
   bool? student = true;
   bool? teacher = false;
   bool? parent = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  void signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,14 +161,15 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.fromLTRB(width * .04, height * .009,
                           width * .04, height * .009),
                       child: TextFormField(
+                          controller: emailController,
                           decoration: const InputDecoration(
-                        hintText: "Username",
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                      )),
+                            hintText: "Username",
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                          )),
                     ),
                   ),
                   SizedBox(
@@ -180,14 +187,15 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.fromLTRB(width * .04, height * .009,
                           width * .04, height * .009),
                       child: TextFormField(
+                          controller: passwordController,
                           decoration: const InputDecoration(
-                        hintText: "Password",
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                      )),
+                            hintText: "Password",
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                          )),
                     ),
                   ),
                   SizedBox(
@@ -218,10 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LandingPage()));
+                      signIn();
                     },
                   ),
                   SizedBox(
