@@ -3,6 +3,8 @@ import 'package:edtech_app_demo/shared/theme_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'authentication/Login.dart';
+import 'package:flutter/material.dart';
 
 import 'authentication/Login.dart';
 
@@ -28,11 +30,12 @@ class edtech_app extends StatelessWidget {
           if (snapshot.hasData) {
             return LandingPage();
           } else {
-            print('User logged out');
+            //print('User logged out');
             return LoginPage();
           }
         },
       ),
+
     );
   }
 }
