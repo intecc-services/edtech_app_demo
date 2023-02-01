@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({key});
+  const Calendar({Key? key});
 
   @override
   State<Calendar> createState() => _CalendarState();

@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class Tasks extends StatefulWidget {
-  const Tasks({super.key});
+  const Tasks({Key? key});
 
   @override
   State<Tasks> createState() => _TimetableState();
