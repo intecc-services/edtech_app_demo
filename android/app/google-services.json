@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "402925468401",
+    "project_id": "intecc-app-demo",
+    "storage_bucket": "intecc-app-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402925468401:android:169d8026fa625c65644750",
+        "android_client_info": {
+          "package_name": "com.intecc.demoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402925468401-dmt6idg9o18907db7aoos60m36mij5ll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUpCXIK622BNungfoKuxkqWKYvnWDQf9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402925468401-dmt6idg9o18907db7aoos60m36mij5ll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
