@@ -114,6 +114,7 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
+                        physics: BouncingScrollPhysics(),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 40.0),
                           child: Row(
@@ -240,101 +241,109 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 40.0, top: 5.0),
-                        child: Row(
-                          children: [
-                            Card(
-                              elevation: 6,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Container(
-                                width: 174,
-                                height: 246,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Color(0xff7678ED).withOpacity(0.3)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset("Images/CalendarCheck.png"),
-                                    Text(
-                                      "Assignments",
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20,
-                                        color: Color(0xff3D348B),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Card(
+                                elevation: 6,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Container(
+                                  width: width1 * 0.45,
+                                  height: 246,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color:
+                                          Color(0xff7678ED).withOpacity(0.3)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset("Images/CalendarCheck.png"),
+                                      Text(
+                                        "Assignments",
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20,
+                                          color: Color(0xff3D348B),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 18,
-                            ),
-                            Column(
-                              children: [
-                                Card(
-                                  elevation: 6,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Container(
-                                    width: 159,
-                                    height: 115,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color:
-                                            Color(0xff7678ED).withOpacity(0.3)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset("Images/attend.png"),
-                                        Text(
-                                          "Attendance",
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: Color(0xff3D348B),
+                              SizedBox(
+                                width: width1 * 0.03,
+                              ),
+                              Column(
+                                children: [
+                                  Card(
+                                    elevation: 6,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Container(
+                                      width: 159,
+                                      height: 115,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Color(0xff7678ED)
+                                              .withOpacity(0.3)),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset("Images/attend.png"),
+                                          Text(
+                                            "Attendance",
+                                            style: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                              color: Color(0xff3D348B),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Card(
-                                  elevation: 6,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Container(
-                                    width: 159,
-                                    height: 115,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color:
-                                            Color(0xff7678ED).withOpacity(0.3)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset("Images/Notebook.png"),
-                                        Text(
-                                          "Materials",
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: Color(0xff3D348B),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Card(
+                                    elevation: 6,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Container(
+                                      width: 159,
+                                      height: 115,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Color(0xff7678ED)
+                                              .withOpacity(0.3)),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset("Images/Notebook.png"),
+                                          Text(
+                                            "Materials",
+                                            style: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                              color: Color(0xff3D348B),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -387,7 +396,7 @@ class _LandingPageState extends State<LandingPage> {
                                     "Graphics And Drawing Techniques",
                                     style: GoogleFonts.inter(
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 16,
+                                        fontSize: width1 * 0.034,
                                         color: Colors.white),
                                   )
                                 ],
