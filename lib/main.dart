@@ -1,4 +1,6 @@
 import 'package:edtech_app_demo/Landing_Page.dart';
+import 'package:edtech_app_demo/chat/Conversation.dart';
+import 'package:edtech_app_demo/grades.dart';
 import 'package:edtech_app_demo/shared/theme_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,7 +17,8 @@ Future main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     theme: customTheme,
-    home: edtech_app(),
+    //home: edtech_app(),
+    home: Grades(),
   ));
 }
 
@@ -35,7 +38,6 @@ class edtech_app extends StatelessWidget {
           }
         },
       ),
-
     );
   }
 }
