@@ -5,8 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'authentication/Login.dart';
 import 'package:flutter/material.dart';
-
-import 'authentication/Login.dart';
+import 'Calendar/Calendar.dart';
 
 // void main() => runApp(edtech_app());
 
@@ -35,7 +34,7 @@ class edtech_app extends StatelessWidget {
           }
         },
       ),
-
     );
+    // body: Calendar());
   }
 }
