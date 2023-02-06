@@ -1,4 +1,3 @@
-import 'package:edtech_app_demo/Landing_Page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -227,10 +226,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LandingPage()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => LandingPage()));
+                      signIn();
                     },
                   ),
                   SizedBox(

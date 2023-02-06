@@ -1,13 +1,10 @@
 import 'package:edtech_app_demo/Landing_Page.dart';
-import 'package:edtech_app_demo/chat/Conversation.dart';
-import 'package:edtech_app_demo/grades.dart';
 import 'package:edtech_app_demo/shared/theme_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'authentication/Login.dart';
-import 'package:flutter/material.dart';
-import 'Calendar/Calendar.dart';
 
 // void main() => runApp(edtech_app());
 
@@ -16,6 +13,7 @@ Future main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     theme: customTheme,
+    // home: Scaffold(body: Grades()),
     home: edtech_app(),
   ));
 }
