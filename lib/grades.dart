@@ -1,8 +1,5 @@
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class Grades extends StatelessWidget {
   const Grades({Key? key}) : super(key: key);
@@ -14,13 +11,18 @@ class Grades extends StatelessWidget {
       backgroundColor: Color(0xff3D348B),
       body: Column(
         children: [
-          SizedBox(height: 40),
+          SizedBox(height: 90),
           Padding(
             padding: const EdgeInsets.all(15),
             child: Row(
               children: [
-                Icon(Icons.arrow_circle_left_rounded,
-                    size: 20, color: Color(0xffFFFFFF)),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_circle_left_rounded,
+                      size: 20, color: Color(0xffFFFFFF)),
+                ),
                 SizedBox(width: 17),
                 Text(
                   'List of Grades',

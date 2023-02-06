@@ -1,3 +1,4 @@
+import 'package:edtech_app_demo/shared/NavBar.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,27 +31,18 @@ class _LandingPageState extends State<LandingPage> {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('hh:mm \n \ta').format(now);
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text('Intecc'),
+      ),
+      drawer: NavBar(),
       body: SingleChildScrollView(
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 90,
-                    left: 20,
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                        size: 40,
-                      )
-                    ],
-                  ),
-                ),
                 Image.asset("Images/Cap.png"),
                 SizedBox(
                   height: height1 * 0.018,
@@ -240,7 +232,8 @@ class _LandingPageState extends State<LandingPage> {
                         height: height1 * 0.03,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 40.0, top: 5.0),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -256,19 +249,25 @@ class _LandingPageState extends State<LandingPage> {
                                       borderRadius: BorderRadius.circular(20),
                                       color:
                                           Color(0xff7678ED).withOpacity(0.3)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset("Images/CalendarCheck.png"),
-                                      Text(
-                                        "Assignments",
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20,
-                                          color: Color(0xff3D348B),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, '/TabBar');
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset("Images/CalendarCheck.png"),
+                                        Text(
+                                          "Assignments",
+                                          style: GoogleFonts.inter(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 20,
+                                            color: Color(0xff3D348B),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -290,20 +289,26 @@ class _LandingPageState extends State<LandingPage> {
                                               BorderRadius.circular(20),
                                           color: Color(0xff7678ED)
                                               .withOpacity(0.3)),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset("Images/attend.png"),
-                                          Text(
-                                            "Attendance",
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: Color(0xff3D348B),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, '/StudentAttendance');
+                                        },
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset("Images/attend.png"),
+                                            Text(
+                                              "Attendance",
+                                              style: GoogleFonts.inter(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12,
+                                                color: Color(0xff3D348B),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -352,7 +357,7 @@ class _LandingPageState extends State<LandingPage> {
               ],
             ),
             Positioned(
-              top: 350,
+              top: 225,
               left: 30,
               child: Container(
                 height: height1 * 0.12,

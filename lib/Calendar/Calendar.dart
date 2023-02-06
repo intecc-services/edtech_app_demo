@@ -2,6 +2,7 @@ import 'package:edtech_app_demo/shared/bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'calendar_items.dart';
 
 class Calendar extends StatefulWidget {
@@ -22,7 +23,9 @@ class _CalendarState extends State<Calendar> {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       icon: const Icon(
                         Icons.arrow_circle_left,
                         color: Colors.white,

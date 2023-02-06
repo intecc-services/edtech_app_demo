@@ -11,10 +11,10 @@ class Chats extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 100,
-        title: Row(
+        title: const Row(
           children: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.arrow_circle_left)),
-            const Padding(
+            // IconButton(onPressed: () {}, icon: Icon(Icons.arrow_circle_left)),
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Messages',

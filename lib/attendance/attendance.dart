@@ -17,7 +17,7 @@ class _AttendanceState extends State<Attendance> {
         children: [
           //The top part that contains attendance and the below button
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Container(
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
