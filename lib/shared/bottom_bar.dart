@@ -17,22 +17,32 @@ class Bottom_Bar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                // Navigator.pushNamed(context, '/');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              },
               icon: Icon(Icons.home_outlined),
               color: Colors.white,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/Messages');
+              },
               icon: Icon(Icons.chat_bubble_outline_rounded),
               color: Colors.white,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/TabBar');
+              },
               icon: Icon(Icons.calendar_today),
               color: Colors.white,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/Profile');
+              },
               icon: Icon(Icons.person_outlined),
               color: Colors.white,
             ),

@@ -1,12 +1,9 @@
 import 'package:edtech_app_demo/TabBar/attendance_student.dart';
-import 'package:edtech_app_demo/shared/horizontalcal.dart';
 import 'package:edtech_app_demo/TabBar/tasks.dart';
 import 'package:edtech_app_demo/TabBar/timetable.dart';
-import 'package:edtech_app_demo/attendance/attendance.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
+import 'package:edtech_app_demo/shared/horizontalcal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class Root extends StatefulWidget {
   const Root({Key? key});
@@ -19,6 +16,11 @@ class _TimetableState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text('Timetable'),
+      ),
       backgroundColor: const Color(0xffEFEFEF),
       body: DefaultTabController(
         length: 3,

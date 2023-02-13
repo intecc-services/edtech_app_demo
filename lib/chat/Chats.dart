@@ -13,8 +13,8 @@ class Chats extends StatelessWidget {
         toolbarHeight: 100,
         title: Row(
           children: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.arrow_circle_left)),
-            const Padding(
+            // IconButton(onPressed: () {}, icon: Icon(Icons.arrow_circle_left)),
+            Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Messages',

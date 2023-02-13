@@ -14,12 +14,33 @@ class NavBar extends StatelessWidget {
         child: ListView(
           children: [
             TopInfo(),
-            myButton('Academic calendar', Icons.calendar_today_rounded),
-            myButton('Time Table', Icons.schedule),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/Calendar');
+                },
+                child: myButton(
+                    'Academic calendar', Icons.calendar_today_rounded)),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/TabBar');
+                },
+                child: myButton('Time Table', Icons.schedule)),
             myButton('Advisory Information', Icons.people),
-            myButton('List of grades', Icons.grade),
-            myButton('Attendance', Icons.schedule),
-            myButton('Exam Calendar', Icons.edit_calendar_outlined),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/Grades');
+                },
+                child: myButton('List of grades', Icons.grade)),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/StudentAttendance');
+                },
+                child: myButton('Attendance', Icons.schedule)),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/Calendar');
+                },
+                child: myButton('Exam Calendar', Icons.edit_calendar_outlined)),
             myButton('Announcements - Events', Icons.add_alert_rounded),
             myButton('Passing with QR code', Icons.qr_code),
           ],
@@ -73,7 +94,7 @@ class TopInfo extends StatelessWidget {
 
 Widget myButton(String ButtonName, IconData Icondata) {
   return Padding(
-    padding: const EdgeInsets.only(top: 0, left: 15),
+    padding: const EdgeInsets.only(top: 30, left: 15),
     child: Row(
       children: [
         Icon(
@@ -81,8 +102,8 @@ Widget myButton(String ButtonName, IconData Icondata) {
           color: Color(0xff3D348B),
           size: 18,
         ),
-        TextButton(
-          onPressed: () {},
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
           child: Text(
             ButtonName,
             style: const TextStyle(
