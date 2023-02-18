@@ -187,61 +187,64 @@ class AssignmentCard extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: double.infinity,
-        child: Card(
-          color: Color(0xffCBCBEE),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(assignment['title'],
-                    style: TextStyle(
-                      color: Color(0xff3D348B),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    )),
-                SizedBox(height: 23),
-                Text(assignment['topic'],
-                    style: TextStyle(
-                      color: Color(0xff3D348B),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    )),
-                SizedBox(height: 23),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.person,
-                      size: 31,
-                    ),
-                    SizedBox(width: 6),
-                    Text(assignment['assignor'],
-                        style: TextStyle(
-                          color: Color(0xff3D348B),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w300,
-                        )),
-                    SizedBox(width: 20),
-                    ElevatedButton(
-                        onPressed: () => viewPDF(context),
-                        child: Icon(
-                          Icons.picture_as_pdf,
-                          color: Colors.white,
-                          size: 40,
-                        ))
-                  ],
-                )
-              ],
+    if (assignment['title'] == null)
+      return Container();
+    else
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: double.infinity,
+          child: Card(
+            color: Color(0xffCBCBEE),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 8),
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(assignment['title'],
+                      style: TextStyle(
+                        color: Color(0xff3D348B),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      )),
+                  SizedBox(height: 23),
+                  Text(assignment['topic'],
+                      style: TextStyle(
+                        color: Color(0xff3D348B),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      )),
+                  SizedBox(height: 23),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: 31,
+                      ),
+                      SizedBox(width: 6),
+                      Text(assignment['assignor'],
+                          style: TextStyle(
+                            color: Color(0xff3D348B),
+                            fontSize: 10,
+                            fontWeight: FontWeight.w300,
+                          )),
+                      SizedBox(width: 20),
+                      ElevatedButton(
+                          onPressed: () => viewPDF(context),
+                          child: Icon(
+                            Icons.picture_as_pdf,
+                            color: Colors.white,
+                            size: 40,
+                          ))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
