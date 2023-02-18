@@ -13,8 +13,10 @@ class Tasks extends StatefulWidget {
 class _TimetableState extends State<Tasks> {
   @override
   Widget build(BuildContext context) {
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.only(top: 36, left: 34),
+      padding: EdgeInsets.only(top: h * 0.035, left: w * 0.07),
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: BouncingScrollPhysics(),
@@ -22,7 +24,7 @@ class _TimetableState extends State<Tasks> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(5, (index) {
-              return reminder();
+              return reminder(context);
             }),
           ),
         ),
@@ -31,7 +33,9 @@ class _TimetableState extends State<Tasks> {
   }
 }
 
-Widget reminder() {
+Widget reminder(BuildContext context) {
+  var h = MediaQuery.of(context).size.height;
+  var w = MediaQuery.of(context).size.width;
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,12 +45,12 @@ Widget reminder() {
           Icon(
             Icons.circle_outlined,
             color: Color(0xff3D348B),
-            size: 12,
+            size: w * 0.035,
           ),
           //not dyn :
           Container(
-            width: 1.5,
-            height: 115,
+            width: w * 0.0035,
+            height: h * 0.161,
             color: Color(0xff7678ED),
           ), //divider :
           // const VerticalDivider(
@@ -58,7 +62,7 @@ Widget reminder() {
           // ),
         ],
       ),
-      SizedBox(width: 10),
+      SizedBox(width: w * 0.03),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,42 +70,44 @@ Widget reminder() {
             'Graphics & Drawing techniques',
             style: TextStyle(
               color: Color(0xff3D348B),
-              fontSize: 14,
+              fontSize: w * 0.04,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 19),
+          SizedBox(height: h * 0.025),
           Row(
             children: [
               reminder_widget(
-                  Color(0xffD6EECB), "0 days Left", Color(0xff2EFF29)),
-              SizedBox(width: 35),
+                  Color(0xffD6EECB), "0 days Left", Color(0xff2EFF29), context),
+              SizedBox(width: w * 0.035),
               reminder_widget(Color.fromARGB(255, 255, 215, 181), "3 days Left",
-                  Color.fromARGB(255, 255, 69, 69)),
+                  Color.fromARGB(255, 255, 69, 69), context),
             ],
           ),
-          SizedBox(height: 19),
+          SizedBox(height: h * 0.025),
         ],
       ),
     ],
   );
 }
 
-Widget reminder_widget(Color clr, String deadline, Color active) {
+Widget reminder_widget(
+    Color clr, String deadline, Color active, BuildContext context) {
+  var h = MediaQuery.of(context).size.height;
+  var w = MediaQuery.of(context).size.width;
   return Container(
-    //not dync again :
-    height: 100,
-    width: 100,
+    height: h * 0.13,
+    width: w * 0.3,
     decoration: BoxDecoration(
       color: clr,
       borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(12),
-          bottomLeft: Radius.circular(12),
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12)),
+          bottomRight: Radius.circular(w * 0.03),
+          bottomLeft: Radius.circular(w * 0.03),
+          topLeft: Radius.circular(w * 0.03),
+          topRight: Radius.circular(w * 0.03)),
     ),
     child: Padding(
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(w * 0.035),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,17 +117,17 @@ Widget reminder_widget(Color clr, String deadline, Color active) {
             style: TextStyle(
               color: Color(0xff767676),
               fontWeight: FontWeight.w400,
-              fontSize: 9,
+              fontSize: w * 0.026,
             ),
           ),
           Row(
             children: [
-              Icon(Icons.circle, color: active, size: 4),
-              SizedBox(width: 3),
+              Icon(Icons.circle, color: active, size: w * 0.015),
+              SizedBox(width: w * 0.015),
               Text(
                 deadline,
                 style: TextStyle(
-                    fontSize: 10,
+                    fontSize: w * 0.03,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff656565)),
               )
@@ -130,7 +136,7 @@ Widget reminder_widget(Color clr, String deadline, Color active) {
           Text(
             'Orthographic projections of a plain',
             style: TextStyle(
-              fontSize: 12,
+              fontSize: w * 0.031,
               fontWeight: FontWeight.w500,
             ),
           )

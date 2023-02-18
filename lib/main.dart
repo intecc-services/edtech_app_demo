@@ -30,8 +30,8 @@ Future main() async {
       '/Grades': (context) => Grades(),
     },
     theme: customTheme,
-    home: edtech_app(),
-    //home: Assignments(),
+    //home: edtech_app(),
+    home: Root(),
   ));
 }
 

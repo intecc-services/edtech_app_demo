@@ -26,7 +26,7 @@ class _TimetableState extends State<Root> {
         length: 3,
         child: Column(
           children: [
-            _topContainer(),
+            _topContainer(context),
             //SizedBox(height: 36),
             Expanded(
               child: TabBarView(
@@ -45,17 +45,20 @@ class _TimetableState extends State<Root> {
   }
 }
 
-Widget _topContainer() {
+Widget _topContainer(BuildContext context) {
+  var h = MediaQuery.of(context).size.height;
+  var w = MediaQuery.of(context).size.width;
   return Container(
     decoration: BoxDecoration(
       color: Color(0xff3D348B),
       //color: Colors.amber,
       borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(60), bottomLeft: Radius.circular(60)),
+          bottomRight: Radius.circular(w * 0.2),
+          bottomLeft: Radius.circular(w * 0.2)),
     ),
     child: Column(
       children: [
-        SizedBox(height: 50, width: double.infinity),
+        SizedBox(height: h * 0.025, width: double.infinity),
         TabBar(
           indicator: UnderlineTabIndicator(
             borderSide: BorderSide(
@@ -63,64 +66,64 @@ Widget _topContainer() {
               //color: Colors.black26.withOpacity(0.2),
               color: const Color(0xffEFEFEF),
             ),
-            insets: EdgeInsets.only(left: 5),
+            insets: EdgeInsets.only(left: w * 0.01),
           ),
           //indicatorColor: Colors.amber,
           indicatorSize: TabBarIndicatorSize.label,
           tabs: [
             Tab(
               child: Container(
-                height: 20,
+                height: h * 0.03,
                 alignment: Alignment.center,
                 child: Text(
                   "Timetable",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: 14,
+                    fontSize: w * 0.04,
                   ),
                 ),
                 decoration: BoxDecoration(
                     color: const Color(0xffEBF3FF),
                     // border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(w * 0.03)),
               ),
             ),
             Tab(
               child: Container(
-                height: 20,
+                height: h * 0.03,
                 alignment: Alignment.center,
                 child: Text(
                   "Tasks",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: 14,
+                    fontSize: w * 0.04,
                   ),
                 ),
                 decoration: BoxDecoration(
                   color: const Color(0xffEBF3FF),
                   // border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(w * 0.03),
                 ),
               ),
             ),
             Tab(
               child: Container(
-                height: 20,
+                height: h * 0.03,
                 alignment: Alignment.center,
                 child: Text(
                   "Attendance",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: 14,
+                    fontSize: w * 0.04,
                   ),
                 ),
                 decoration: BoxDecoration(
                     color: const Color(0xffEBF3FF),
                     // border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(10)),
+                    borderRadius: BorderRadius.circular(w * 0.03)),
               ),
             ),
           ],

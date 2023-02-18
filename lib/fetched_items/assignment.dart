@@ -22,14 +22,16 @@ class _MaterialsState extends State<Assignments> {
 
   @override
   Widget build(BuildContext context) {
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     return Scaffold(
       bottomNavigationBar: Bottom_Bar(),
       backgroundColor: Color(0xff3D348B),
       body: Column(
         children: [
-          SizedBox(height: 90),
+          SizedBox(height: h * 0.1),
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: EdgeInsets.all(w * 0.05),
             child: Row(
               children: [
                 IconButton(
@@ -37,14 +39,14 @@ class _MaterialsState extends State<Assignments> {
                     Navigator.pop(context);
                   },
                   icon: Icon(Icons.arrow_circle_left_rounded,
-                      size: 20, color: Color(0xffFFFFFF)),
+                      size: w * 0.075, color: Color(0xffFFFFFF)),
                 ),
-                SizedBox(width: 17),
+                SizedBox(width: w * 0.07),
                 Text(
                   'Assignments',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 32,
+                    fontSize: w * 0.08,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -56,20 +58,21 @@ class _MaterialsState extends State<Assignments> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50),
-                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(w * 0.13),
+                  topLeft: Radius.circular(w * 0.13),
                 ),
                 color: Color(0xffF2F2F2),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
+                padding: EdgeInsets.only(
+                    left: w * 0.02, right: w * 0.02, top: h * 0.02),
                 child: Column(
                   children: [
                     Text(
                       'Section-B',
                       style: TextStyle(
                         color: Color(0xff3D348B),
-                        fontSize: 24,
+                        fontSize: w * 0.065,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -187,55 +190,61 @@ class AssignmentCard extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     if (assignment['title'] == null)
       return Container();
     else
       return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(w * 0.02),
         child: Container(
           width: double.infinity,
           child: Card(
+            elevation: 6,
             color: Color(0xffCBCBEE),
             child: Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 8),
+              padding: EdgeInsets.only(top: h * 0.01, bottom: h * 0.01),
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(assignment['title'],
                       style: TextStyle(
                         color: Color(0xff3D348B),
-                        fontSize: 14,
+                        fontSize: w * 0.047,
                         fontWeight: FontWeight.w700,
                       )),
-                  SizedBox(height: 23),
+                  SizedBox(height: h * 0.03),
                   Text(assignment['topic'],
                       style: TextStyle(
                         color: Color(0xff3D348B),
-                        fontSize: 14,
+                        fontSize: w * 0.04,
                         fontWeight: FontWeight.w700,
                       )),
-                  SizedBox(height: 23),
+                  SizedBox(height: h * 0.03),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.person,
-                        size: 31,
+                        size: w * 0.09,
                       ),
-                      SizedBox(width: 6),
+                      SizedBox(width: w * 0.03),
                       Text(assignment['assignor'],
                           style: TextStyle(
                             color: Color(0xff3D348B),
-                            fontSize: 10,
+                            fontSize: w * 0.03,
                             fontWeight: FontWeight.w300,
                           )),
-                      SizedBox(width: 20),
+                      SizedBox(width: w * 0.05),
                       ElevatedButton(
                           onPressed: () => viewPDF(context),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Color(0xff3D348B))),
                           child: Icon(
                             Icons.picture_as_pdf,
                             color: Colors.white,
-                            size: 40,
+                            size: w * 0.1,
                           ))
                     ],
                   )

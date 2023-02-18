@@ -1,6 +1,8 @@
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
+//this page isnt done properly : its just a dummy page for now.
+
 class Materials extends StatefulWidget {
   const Materials({Key? key}) : super(key: key);
 

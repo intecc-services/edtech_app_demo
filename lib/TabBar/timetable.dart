@@ -13,8 +13,10 @@ class Timetable extends StatefulWidget {
 class _TimetableState extends State<Timetable> {
   @override
   Widget build(BuildContext context) {
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.only(top: 36, left: 34),
+      padding: EdgeInsets.only(top: h * 0.035, left: w * 0.07),
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: BouncingScrollPhysics(),
@@ -22,7 +24,7 @@ class _TimetableState extends State<Timetable> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(5, (index) {
-              return reminder();
+              return reminder(context);
             }),
           ),
         ),
@@ -31,7 +33,9 @@ class _TimetableState extends State<Timetable> {
   }
 }
 
-Widget reminder() {
+Widget reminder(BuildContext context) {
+  var h = MediaQuery.of(context).size.height;
+  var w = MediaQuery.of(context).size.width;
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,12 +45,12 @@ Widget reminder() {
           Icon(
             Icons.circle_outlined,
             color: Color(0xff3D348B),
-            size: 12,
+            size: w * 0.035,
           ),
           //not dyn :
           Container(
-            width: 1.5,
-            height: 115,
+            width: w * 0.0035,
+            height: h * 0.15,
             color: Color(0xff7678ED),
           ), //divider :
           // const VerticalDivider(
@@ -58,7 +62,7 @@ Widget reminder() {
           // ),
         ],
       ),
-      SizedBox(width: 10),
+      SizedBox(width: w * 0.03),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,34 +70,35 @@ Widget reminder() {
             '08:15 - 10:15',
             style: TextStyle(
               color: Color(0xff3D348B),
-              fontSize: 14,
+              fontSize: w * 0.04,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 19),
-          reminder_widget(),
-          SizedBox(height: 19),
+          SizedBox(height: h * 0.025),
+          reminder_widget(context),
+          SizedBox(height: h * 0.025),
         ],
       ),
     ],
   );
 }
 
-Widget reminder_widget() {
+Widget reminder_widget(BuildContext context) {
+  var h = MediaQuery.of(context).size.height;
+  var w = MediaQuery.of(context).size.width;
   return Container(
-    //not dync again :
-    height: 85,
-    width: 275,
+    height: h * 0.11,
+    width: w * 0.7,
     decoration: BoxDecoration(
       color: Color(0xff7678ED),
       borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(12),
-          bottomLeft: Radius.circular(12),
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12)),
+          bottomRight: Radius.circular(w * 0.03),
+          bottomLeft: Radius.circular(w * 0.03),
+          topLeft: Radius.circular(w * 0.03),
+          topRight: Radius.circular(w * 0.03)),
     ),
     child: Padding(
-      padding: const EdgeInsets.all(14),
+      padding: EdgeInsets.all(w * 0.025),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +108,7 @@ Widget reminder_widget() {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w700,
-              fontSize: 16,
+              fontSize: w * 0.04,
             ),
           ),
           Text(
@@ -111,7 +116,7 @@ Widget reminder_widget() {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w400,
-              fontSize: 12,
+              fontSize: w * 0.035,
             ),
           ),
           Text(
@@ -119,7 +124,7 @@ Widget reminder_widget() {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w400,
-              fontSize: 12,
+              fontSize: w * 0.035,
             ),
           ),
         ],
