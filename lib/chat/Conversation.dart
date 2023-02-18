@@ -1,69 +1,128 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Conversation extends StatefulWidget {
+  final String? id;
+  final String? myId;
+  const Conversation({Key? key, required this.id, required this.myId}) : super(key: key);
   @override
   State<Conversation> createState() => _ConversationState();
 }
 
 class _ConversationState extends State<Conversation> {
+  String? id;
+  String? myId;
   @override
   Widget build(BuildContext context) {
+    var firebaseStream = FirebaseFirestore.instance.collection("message").where("to",whereIn:["${widget.id}","${widget.myId}"]).snapshots();
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 40),
-          Padding(
-            // top profile and name
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: const [
-                CircleAvatar(
-                  radius: 35,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'George Hawkings',
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            //chat section
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50),
-                  topLeft: Radius.circular(50),
-                ),
-                color: Color(0xffF2F2F2),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+      body: StreamBuilder(
+          stream:firebaseStream ,
+          builder:(ctx, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            var len = snapshot.data?.docs.length;
+            if (len!=null)
+            {
+              var docs = snapshot.data!.docs;
+              List<ChatType> chatList = docs.map((e) {
+                var data = e.data();
+                return ChatType(
+                    from: data['from'],
+                    to:data['to'],
+                    message:data['message'],
+                    time:data['time']);
+              }).toList();
+              chatList = chatList.where((element) => (element.to==widget.id || element.from==widget.id)).toList();
+              chatList.sort((a,b){
+                var x =  a.time.compareTo(b.time);
+                return x==1?1:0;
+              });
+              int len2 = chatList.length;
+              return Column(
                 children: [
-                  ChatBubble(1, 'Hello sir, I have a doubt', '4:00 pm'),
-                  ChatBubble(
-                      0,
-                      'Yes Rohan, let me know what topic you have a dount in ',
-                      '4:15 pm'),
+                  SizedBox(height: 40),
+                  Padding(
+                    // top profile and name
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      children: const [
+                        CircleAvatar(
+                          radius: 35,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'George Hawkings',
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    //chat section
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(50),
+                          topLeft: Radius.circular(50),
+                        ),
+                        color: Color(0xffF2F2F2),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+
+                          Expanded(
+                            child: ListView.builder(
+                                itemCount: len2,
+                                itemBuilder: (ctx, index) {
+                                  // var doc = snapshot.data!.docs[index];
+                                  // var data = doc.data();
+                                  // print(data.toString());
+                                  return ChatBubble(chatList[index].from!=widget.myId?0:1, chatList[index].message, chatList[index].time);
+                                }),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  inputField(id: widget.id,myId: widget.myId), //place to enter text
                 ],
-              ),
-            ),
-          ),
-          inputField(), //place to enter text
-        ],
-      ),
-    );
+              );
+            }//if statement
+            else{
+              return const Center(child: Text("Null Returned"));
+            }
+          }),
+    ) ;
   }
 }
 
 class inputField extends StatefulWidget {
+  final String? id;
+  final String? myId;
   @override
+  const inputField({Key? key, required this.id, required this.myId}) : super(key: key);
   State<inputField> createState() => _inputField();
 }
 
 class _inputField extends State<inputField> {
+  final _controller = TextEditingController();
+  void sendMessage() async {
+    // print(message);
+    await FirebaseFirestore.instance.collection('message').add({
+      "message":message,
+      "to":widget.id,
+      "from":widget.myId,
+      "time":Timestamp.now()
+    });
+    _controller.clear();
+  }
+  String message = "";
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,8 +133,12 @@ class _inputField extends State<inputField> {
             color: Colors.grey[300],
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: CupertinoTextField(
+              controller: _controller,
               padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               placeholder: 'Message...',
+                onChanged: (value){
+                  message= value;
+                },
               decoration: BoxDecoration(
                   color: Color(0xff7678ED),
                   borderRadius: BorderRadius.circular(20)),
@@ -91,7 +154,22 @@ class _inputField extends State<inputField> {
   }
 }
 
-Widget ChatBubble(int side, String text, time) {
+class ChatType{
+  String? from;
+  String? to;
+  String? message;
+  Timestamp time = Timestamp.now();
+
+  ChatType({from,to,message,time}){
+    this.from = from;
+    this.to = to;
+    this.time = time;
+    this.message = message;
+  }
+}
+
+
+Widget ChatBubble(int side, String? text,Timestamp time) {
   return Row(
     mainAxisAlignment:
         side == 0 ? MainAxisAlignment.start : MainAxisAlignment.end,
@@ -111,13 +189,13 @@ Widget ChatBubble(int side, String text, time) {
                   : BoxDecoration(
                       color: Color(0xff7678ED),
                       borderRadius: BorderRadius.circular(30)),
-              child: Text(text,
+              child: Text("$text",
                   style: TextStyle(color: Colors.white, fontSize: 12)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
               child: Text(
-                time,
+                "${time.toDate().toString()}",
                 style: TextStyle(fontSize: 10, color: Colors.grey),
               ),
             )
