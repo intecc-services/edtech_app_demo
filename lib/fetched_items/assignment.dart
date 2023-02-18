@@ -17,7 +17,7 @@ class _MaterialsState extends State<Assignments> {
   @override
   void initState() {
     super.initState();
-    firebaseServices.getTitles();
+    //firebaseServices.getTitles();
   }
 
   @override
@@ -75,20 +75,24 @@ class _MaterialsState extends State<Assignments> {
                     ),
                     //SizedBox(height: 10),
                     Expanded(
-                      child: StreamBuilder(
-                        stream: firebaseServices.getTitlesStream(),
+                      child: StreamBuilder<List<Map<String, dynamic>>>(
+                        stream: firebaseServices.getAssignments(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return Center(child: CircularProgressIndicator());
                           }
-                          List<String> titles =
-                              (snapshot.data as List<dynamic>).cast<String>();
+                          final assignments = snapshot.data!;
+                          // List<String> titles =
+                          //     (snapshot.data as List<dynamic>).cast<String>();
                           return ListView.builder(
-                            itemCount: titles.length,
+                            //itemCount: titles.length,
+                            itemCount: assignments.length,
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return AssignmentCard(title: titles[index]);
+                            itemBuilder: (context, index) {
+                              //final assignment = assignments[index];
+                              return AssignmentCard(
+                                  assignment: assignments[index]);
                             },
                           );
                         },
@@ -165,14 +169,15 @@ class _MaterialsState extends State<Assignments> {
 // }
 
 class AssignmentCard extends StatelessWidget {
-  final String title;
+  Map<String, dynamic> assignment;
+  //final String title;
   FirebaseServices firebaseServices = FirebaseServices();
 
-  AssignmentCard({required this.title});
+  AssignmentCard({required this.assignment});
 
   void viewPDF(BuildContext context) async {
     //print("here");
-    String pdfURL = await firebaseServices.getPdfURL(title);
+    String pdfURL = await firebaseServices.getPdfURL(assignment['title']);
     print("here");
     print(pdfURL);
     Navigator.push(
@@ -193,14 +198,14 @@ class AssignmentCard extends StatelessWidget {
             child: Column(
               //mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(title,
+                Text(assignment['title'],
                     style: TextStyle(
                       color: Color(0xff3D348B),
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                     )),
                 SizedBox(height: 23),
-                Text('Solid Orthographic projection ',
+                Text(assignment['topic'],
                     style: TextStyle(
                       color: Color(0xff3D348B),
                       fontSize: 14,
@@ -215,7 +220,7 @@ class AssignmentCard extends StatelessWidget {
                       size: 31,
                     ),
                     SizedBox(width: 6),
-                    Text('Prof George Hawkins',
+                    Text(assignment['assignor'],
                         style: TextStyle(
                           color: Color(0xff3D348B),
                           fontSize: 10,
