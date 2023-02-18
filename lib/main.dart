@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 
 import 'authentication/Login.dart';
 
+//chat id is not addded : and assignments() pg hasnt been added to any route yet.
+
 // void main() => runApp(edtech_app());
 
 Future main() async {
@@ -30,8 +32,8 @@ Future main() async {
       '/Grades': (context) => Grades(),
     },
     theme: customTheme,
-    //home: edtech_app(),
-    home: Root(),
+    home: edtech_app(),
+    // home: Root(),
   ));
 }
 
