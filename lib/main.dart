@@ -1,8 +1,11 @@
 import 'package:edtech_app_demo/Calendar/Calendar.dart';
+import 'package:edtech_app_demo/Events/event_home.dart';
 import 'package:edtech_app_demo/Landing_Page.dart';
 import 'package:edtech_app_demo/TabBar/root.dart';
 import 'package:edtech_app_demo/attendance/attendance.dart';
 import 'package:edtech_app_demo/chat/Chats.dart';
+import 'package:edtech_app_demo/fetched_items/assignment.dart';
+import 'package:edtech_app_demo/fetched_items/material.dart';
 import 'package:edtech_app_demo/grades.dart';
 import 'package:edtech_app_demo/profile.dart';
 import 'package:edtech_app_demo/shared/theme_data.dart';
@@ -27,7 +30,8 @@ Future main() async {
       '/Grades': (context) => Grades(),
     },
     theme: customTheme,
-    home: edtech_app(),
+    //home: edtech_app(),
+    home: Assignments(),
   ));
 }
 

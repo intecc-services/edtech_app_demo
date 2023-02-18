@@ -1,5 +1,6 @@
 import 'package:path/path.dart' as Path;
 import 'dart:io';
+// import './UploadDialog.dart';
 import 'package:edtech_app_demo/shared/NavBar.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,11 @@ import 'api/firebase_api.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
-
   @override
   State<LandingPage> createState() => _LandingPageState();
 }
+
+String fileName = 'No file selected';
 
 class _LandingPageState extends State<LandingPage> {
   PlatformFile? pickedfile;
@@ -33,11 +35,12 @@ class _LandingPageState extends State<LandingPage> {
   UploadTask? uploadTask;
   @override
   Widget build(BuildContext context) {
-    final fileName =
-        file != null ? Path.basename(file!.path) : 'No file Selected';
+    //final fileName =
+    //  file != null ? Path.basename(file!.path) : 'No file Selected';
     var height1 = MediaQuery.of(context).size.height;
     var width1 = MediaQuery.of(context).size.width;
     final Color background = Color(0xff3D348B);
+
     var name;
     final Color fill = Colors.white;
     final List<Color> gradient = [
@@ -357,128 +360,116 @@ class _LandingPageState extends State<LandingPage> {
                                         onTap: () {
                                           showDialog(
                                               context: context,
-                                              builder: (context) =>
-                                                  SimpleDialog(
-                                                    title: Row(
-                                                      children: [
-                                                        Text(
-                                                          "Upload a file",
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 20,
-                                                            color: Color(
-                                                                0xff3D348B),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: width1 * 0.24,
-                                                        ),
-                                                        GestureDetector(
-                                                          child: Icon(
-                                                            Icons.close,
-                                                          ),
-                                                          onTap: () =>
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop(),
-                                                        ),
-                                                      ],
-                                                    ),
+                                              builder: (context) => AlertDialog(
+                                                  title: Row(
                                                     children: [
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          ElevatedButton(
-                                                            onPressed:
-                                                                selectFile,
-                                                            child: Text(
-                                                                "Select File"),
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              primary: Color(
-                                                                  0xff7678ED),
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          60,
-                                                                      vertical:
-                                                                          20),
-                                                              textStyle: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Text(
-                                                            fileName,
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
-                                                          SizedBox(
-                                                            height:
-                                                                height1 * 0.02,
-                                                          ),
-                                                          ElevatedButton(
-                                                            onPressed:
-                                                                uploadFile,
-                                                            child: Text(
-                                                              "Upload",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black),
-                                                            ),
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            30),
-                                                              ),
-                                                              primary: Colors
-                                                                  .white
-                                                                  .withOpacity(
-                                                                      0.87),
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          30,
-                                                                      vertical:
-                                                                          10),
-                                                              textStyle: TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          uploadTask != null
-                                                              ? buildUploadStatus(
-                                                                  uploadTask!)
-                                                              : Container(),
-                                                        ],
-                                                      )
+                                                      Text(
+                                                        "Upload a file",
+                                                        style:
+                                                            GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 20,
+                                                          color:
+                                                              Color(0xff3D348B),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: width1 * 0.24,
+                                                      ),
+                                                      GestureDetector(
+                                                        child: Icon(
+                                                          Icons.close,
+                                                        ),
+                                                        onTap: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                      ),
                                                     ],
-                                                  ));
+                                                  ),
+                                                  content: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      ElevatedButton(
+                                                        onPressed: selectFile,
+                                                        child:
+                                                            Text("Select File"),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          primary:
+                                                              Color(0xff7678ED),
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      60,
+                                                                  vertical: 20),
+                                                          textStyle: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        fileName,
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      SizedBox(
+                                                        height: height1 * 0.02,
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: uploadFile,
+                                                        child: Text(
+                                                          "Upload",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        30),
+                                                          ),
+                                                          primary: Colors.white
+                                                              .withOpacity(
+                                                                  0.87),
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      30,
+                                                                  vertical: 10),
+                                                          textStyle: TextStyle(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      uploadTask != null
+                                                          ? buildUploadStatus(
+                                                              uploadTask!)
+                                                          : Container(),
+                                                    ],
+                                                  )));
                                         },
                                         child: Column(
                                           mainAxisAlignment:
@@ -602,17 +593,16 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+  void selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return; // User pressed cancel
 
-    if (result == null) return;
-    final path = result.files.single.path!;
-    setState(
-      () => file = File(path),
-    );
-    //  setState() {
-    //    pickedfile = result.files.first;
-    // }
+    final file = result.files.single;
+    setState(() {
+      fileName = file.name; // Update fileName with selected file name
+    });
+
+    // Upload the file to Firebase here
   }
 
   Future uploadFile() async {
