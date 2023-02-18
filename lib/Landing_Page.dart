@@ -1,3 +1,5 @@
+import 'dart:ffi';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:io';
 // import './UploadDialog.dart';
@@ -27,9 +29,156 @@ class LandingPage extends StatefulWidget {
   State<LandingPage> createState() => _LandingPageState();
 }
 
-String fileName = 'No file selected';
+String fileName = '';
 
 class _LandingPageState extends State<LandingPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _textEditingController1 = TextEditingController();
+  final TextEditingController _textEditingController2 = TextEditingController();
+  final TextEditingController _textEditingController3 = TextEditingController();
+//Function to upload assignment
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          bool isChecked = false;
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _textEditingController1,
+                          validator: (value) {
+                            return value!.isNotEmpty
+                                ? null
+                                : "Please enter assignment name";
+                          },
+                          decoration:
+                              InputDecoration(hintText: "Assignment name"),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _textEditingController2,
+                          validator: (value) {
+                            return value!.isNotEmpty
+                                ? null
+                                : "Please enter the topic";
+                          },
+                          decoration:
+                              InputDecoration(hintText: "Assignment Topic"),
+                        ),
+                        SizedBox(
+                          height: 1,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _textEditingController3,
+                          validator: (value) {
+                            return value!.isNotEmpty
+                                ? null
+                                : "Please enter assigner's name";
+                          },
+                          decoration:
+                              InputDecoration(hintText: "Assigner's name"),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                          onPressed: selectFile,
+                          child: Text("Select File"),
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xff7678ED),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            textStyle: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          fileName,
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Ready to Upload?"),
+                            Checkbox(
+                                value: isChecked,
+                                onChanged: (checked) {
+                                  setState(() {
+                                    isChecked = checked!;
+                                  });
+                                })
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        ElevatedButton(
+                          onPressed: uploadFile,
+                          child: Text(
+                            "Upload",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            primary: Colors.white.withOpacity(0.87),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            textStyle: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        uploadTask != null
+                            ? buildUploadStatus(uploadTask!)
+                            : Container(),
+                      ],
+                    )),
+              ),
+              title: Row(
+                children: [
+                  Text('Assignment Upload'),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        // Do something like updating SharedPreferences or User Settings etc.
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icon(Icons.close)),
+                ],
+              ),
+              actions: <Widget>[
+                InkWell(
+                  child: Text('OK   '),
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+        });
+  }
+
   PlatformFile? pickedfile;
   File? file;
   UploadTask? uploadTask;
@@ -257,30 +406,29 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                       ),
                       SizedBox(
-                        height: height1 * 0.03,
+                        height: height1 * 0.02,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 2, horizontal: 10),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 10),
                           child: Row(
                             children: [
-                              Card(
-                                elevation: 6,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Container(
-                                  width: width1 * 0.45,
-                                  height: 246,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color:
-                                          Color(0xff7678ED).withOpacity(0.3)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/TabBar');
-                                    },
+                              GestureDetector(
+                                onTap: () async {
+                                  await showInformationDialog(context);
+                                },
+                                child: Card(
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Container(
+                                    width: width1 * 0.45,
+                                    height: 246,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color:
+                                            Color(0xff7678ED).withOpacity(0.3)),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -381,7 +529,7 @@ class _LandingPageState extends State<LandingPage> {
                                                         child: Icon(
                                                           Icons.close,
                                                         ),
-                                                        onTap: () =>
+                                                        onTap: () async =>
                                                             Navigator.of(
                                                                     context)
                                                                 .pop(),
@@ -397,7 +545,10 @@ class _LandingPageState extends State<LandingPage> {
                                                             .center,
                                                     children: [
                                                       ElevatedButton(
-                                                        onPressed: selectFile,
+                                                        onPressed: () {
+                                                          updateName();
+                                                          selectFile();
+                                                        },
                                                         child:
                                                             Text("Select File"),
                                                         style: ElevatedButton
@@ -593,7 +744,24 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  void selectFile() async {
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    final file1 = result.files.single;
+    setState(
+      () => file = File(path),
+    );
+    setState(() {
+      fileName = file1.name;
+    });
+    //  setState() {
+    //    pickedfile = result.files.first;
+    // }
+  }
+
+  void updateName() async {
     final result = await FilePicker.platform.pickFiles();
     if (result == null) return; // User pressed cancel
 
@@ -601,10 +769,9 @@ class _LandingPageState extends State<LandingPage> {
     setState(() {
       fileName = file.name; // Update fileName with selected file name
     });
-
-    // Upload the file to Firebase here
   }
 
+  double uploadProgress = 0;
   Future uploadFile() async {
     if (file == null) return;
 
@@ -616,30 +783,53 @@ class _LandingPageState extends State<LandingPage> {
 
     if (uploadTask == null) return;
 
+    uploadTask!.snapshotEvents.listen((TaskSnapshot snapshot) {
+      final progress = snapshot.bytesTransferred / snapshot.totalBytes;
+      setState(() {
+        uploadProgress = progress;
+      });
+    });
+
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 
     print('Download-Link: $urlDownload');
+
+    // Upload file data to Cloud Firestore
+    final assignmentName = _textEditingController1.text;
+    final assignmentTopic = _textEditingController2.text;
+    final assignerName = _textEditingController3.text;
+
+    final data = {
+      'assignmentName': assignmentName,
+      'assignmentTopic': assignmentTopic,
+      'assignerName': assignerName,
+      'fileUrl': urlDownload,
+    };
+
+    FirebaseFirestore.instance.collection('assignments').add(data);
   }
 
-  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
-        stream: task.snapshotEvents,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final snap = snapshot.data!;
-            final progress = snap.bytesTransferred / snap.totalBytes;
-            final percentage = (progress * 100).toStringAsFixed(2);
+  Widget buildUploadStatus(UploadTask task) {
+    return StreamBuilder<TaskSnapshot>(
+      stream: task.snapshotEvents,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final snap = snapshot.data!;
+          final progress = snap.bytesTransferred / snap.totalBytes;
+          final percentage = (progress * 100).toStringAsFixed(2);
 
-            return Text(
-              '$percentage %',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            );
-          } else {
-            return Container();
-          }
-        },
-      );
+          return Text(
+            '$percentage %',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          );
+        } else if (snapshot.hasError) {
+          return Text('Upload failed: ${snapshot.error}');
+        } else {
+          return const Text('Uploading...');
+        }
+      },
+    );
+  }
 }
