@@ -14,7 +14,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'authentication/Login.dart';
 import 'chat/Chats.dart';
 
-//chat id is not addded : and assignments() pg hasnt been added to any route yet.
+//chat id is not addded : and assignments() pg hasnt been added to any route yet.clear
 
 // void main() => runApp(edtech_app());
 

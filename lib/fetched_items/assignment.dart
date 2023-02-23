@@ -87,17 +87,39 @@ class _MaterialsState extends State<Assignments> {
                           final assignments = snapshot.data!;
                           // List<String> titles =
                           //     (snapshot.data as List<dynamic>).cast<String>();
-                          return ListView.builder(
-                            //itemCount: titles.length,
-                            itemCount: assignments.length,
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              //final assignment = assignments[index];
-                              return AssignmentCard(
-                                  assignment: assignments[index]);
-                            },
-                          );
+                          return Stack(children: [
+                            ListView.builder(
+                              //itemCount: titles.length,
+                              itemCount: assignments.length,
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                //final assignment = assignments[index];
+                                return AssignmentCard(
+                                    assignment: assignments[index]);
+                              },
+                            ),
+                            Positioned(
+                              bottom: 16.0,
+                              right: 16.0,
+                              child: FloatingActionButton(
+                                backgroundColor: Color(
+                                    0xff3D348B), // set the background color
+                                foregroundColor:
+                                    Colors.white, // set the text and icon color
+                                elevation: 2.0, // add shadow
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      30.0), // round the button shape
+                                ),
+                                onPressed: () {
+                                  // add your onPressed action here
+                                  //add the dialog box here:
+                                },
+                                child: Icon(Icons.add),
+                              ),
+                            ),
+                          ]);
                         },
                       ),
                     ),
