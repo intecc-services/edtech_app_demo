@@ -134,6 +134,15 @@ class _inputField extends State<inputField> {
       "from": widget.myId,
       "time": Timestamp.now()
     });
+    
+//     await FirebaseFirestore.instance.collection('message').update({
+//       "last_message": Timestamp.now()
+//     }).then((result){
+//       print("new USer true");
+//     }).catchError((onError){
+//      print("onError");
+//     });
+    
     _controller.clear();
   }
 
