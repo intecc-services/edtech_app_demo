@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:path/path.dart' as Path;
 import 'dart:io';
+import './fetched_items/assignment.dart';
 // import './UploadDialog.dart';
 import 'package:edtech_app_demo/shared/NavBar.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
@@ -415,9 +416,17 @@ class _LandingPageState extends State<LandingPage> {
                           child: Row(
                             children: [
                               GestureDetector(
-                                onTap: () async {
-                                  await showInformationDialog(context);
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Assignments()),
+                                  );
                                 },
+
+                                //async {
+                                // await showInformationDialog(context);
+                                //},
                                 child: Card(
                                   elevation: 6,
                                   shape: RoundedRectangleBorder(
