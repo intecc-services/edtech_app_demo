@@ -1,28 +1,19 @@
-import 'dart:ffi';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:path/path.dart' as Path;
 import 'dart:io';
-import './fetched_items/assignment.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edtech_app_demo/TabBar/root.dart';
 // import './UploadDialog.dart';
 import 'package:edtech_app_demo/shared/NavBar.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:edtech_app_demo/Calendar/Calendar.dart';
-import 'package:edtech_app_demo/Landing_Page.dart';
-import 'package:edtech_app_demo/TabBar/root.dart';
-import 'package:edtech_app_demo/attendance/attendance.dart';
-import 'package:edtech_app_demo/chat/Chats.dart';
-import 'package:edtech_app_demo/grades.dart';
-import 'package:edtech_app_demo/profile.dart';
-import 'package:edtech_app_demo/shared/theme_data.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'authentication/Login.dart';
+import 'package:path/path.dart' as Path;
+
 import 'api/firebase_api.dart';
+import 'fetched_items/assignment.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -420,7 +411,7 @@ class _LandingPageState extends State<LandingPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Assignments()),
+                                        builder: (context) => Root()),
                                   );
                                 },
 
@@ -461,24 +452,24 @@ class _LandingPageState extends State<LandingPage> {
                               ),
                               Column(
                                 children: [
-                                  Card(
-                                    elevation: 6,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Container(
-                                      width: 159,
-                                      height: 115,
-                                      decoration: BoxDecoration(
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, '/StudentAttendance');
+                                    },
+                                    child: Card(
+                                      elevation: 6,
+                                      shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Color(0xff7678ED)
-                                              .withOpacity(0.3)),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.pushNamed(
-                                              context, '/StudentAttendance');
-                                        },
+                                              BorderRadius.circular(20)),
+                                      child: Container(
+                                        width: 159,
+                                        height: 115,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Color(0xff7678ED)
+                                                .withOpacity(0.3)),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -500,137 +491,27 @@ class _LandingPageState extends State<LandingPage> {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  Card(
-                                    elevation: 6,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Container(
-                                      width: 159,
-                                      height: 115,
-                                      decoration: BoxDecoration(
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Assignments()));
+                                    },
+                                    child: Card(
+                                      elevation: 6,
+                                      shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20),
-                                          color: Color(0xff7678ED)
-                                              .withOpacity(0.3)),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                  title: Row(
-                                                    children: [
-                                                      Text(
-                                                        "Upload a file",
-                                                        style:
-                                                            GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 20,
-                                                          color:
-                                                              Color(0xff3D348B),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: width1 * 0.24,
-                                                      ),
-                                                      GestureDetector(
-                                                        child: Icon(
-                                                          Icons.close,
-                                                        ),
-                                                        onTap: () async =>
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop(),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  content: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      ElevatedButton(
-                                                        onPressed: () {
-                                                          updateName();
-                                                          selectFile();
-                                                        },
-                                                        child:
-                                                            Text("Select File"),
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          primary:
-                                                              Color(0xff7678ED),
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      60,
-                                                                  vertical: 20),
-                                                          textStyle: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                        fileName,
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                      SizedBox(
-                                                        height: height1 * 0.02,
-                                                      ),
-                                                      ElevatedButton(
-                                                        onPressed: uploadFile,
-                                                        child: Text(
-                                                          "Upload",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30),
-                                                          ),
-                                                          primary: Colors.white
-                                                              .withOpacity(
-                                                                  0.87),
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      30,
-                                                                  vertical: 10),
-                                                          textStyle: TextStyle(
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      uploadTask != null
-                                                          ? buildUploadStatus(
-                                                              uploadTask!)
-                                                          : Container(),
-                                                    ],
-                                                  )));
-                                        },
+                                              BorderRadius.circular(20)),
+                                      child: Container(
+                                        width: 159,
+                                        height: 115,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Color(0xff7678ED)
+                                                .withOpacity(0.3)),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -663,84 +544,90 @@ class _LandingPageState extends State<LandingPage> {
             Positioned(
               top: 225,
               left: 30,
-              child: Container(
-                height: height1 * 0.12,
-                width: width1 * 0.9,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  color: Color(0xff7678ED),
-                  elevation: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 10.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          formattedDate,
-                          style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20,
-                              color: Colors.white),
-                        ),
-                        const VerticalDivider(
-                          width: 20,
-                          thickness: 1,
-                          indent: 0,
-                          endIndent: 0,
-                          color: Colors.grey,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Root()));
+                },
+                child: Container(
+                  height: height1 * 0.12,
+                  width: width1 * 0.9,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    color: Color(0xff7678ED),
+                    elevation: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 10.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            formattedDate,
+                            style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                                color: Colors.white),
                           ),
-                          child: Column(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Wrap(
-                                direction: Axis.horizontal,
-                                children: [
-                                  Text(
-                                    "Graphics And Drawing Techniques",
-                                    style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: width1 * 0.034,
-                                        color: Colors.white),
-                                  )
-                                ],
-                                // child: Text(
-                                //   "Graphics And Drawing Techniques",
-                                //   style: GoogleFonts.inter(
-                                //       fontWeight: FontWeight.w600,
-                                //       fontSize: 16,
-                                //       color: Colors.white),
-                                // ),
-                              ),
-                              SizedBox(
-                                height: height1 * 0.015,
-                              ),
-                              Text(
-                                "RAJAN KUMAR",
-                                style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: height1 * 0.008,
-                              ),
-                              Text(
-                                "00222129300-12023903",
-                                style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Colors.white),
-                              ),
-                            ],
+                          const VerticalDivider(
+                            width: 20,
+                            thickness: 1,
+                            indent: 0,
+                            endIndent: 0,
+                            color: Colors.grey,
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                            ),
+                            child: Column(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Wrap(
+                                  direction: Axis.horizontal,
+                                  children: [
+                                    Text(
+                                      "Graphics And Drawing Techniques",
+                                      style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: width1 * 0.034,
+                                          color: Colors.white),
+                                    )
+                                  ],
+                                  // child: Text(
+                                  //   "Graphics And Drawing Techniques",
+                                  //   style: GoogleFonts.inter(
+                                  //       fontWeight: FontWeight.w600,
+                                  //       fontSize: 16,
+                                  //       color: Colors.white),
+                                  // ),
+                                ),
+                                SizedBox(
+                                  height: height1 * 0.015,
+                                ),
+                                Text(
+                                  "RAJAN KUMAR",
+                                  style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Colors.white),
+                                ),
+                                SizedBox(
+                                  height: height1 * 0.008,
+                                ),
+                                Text(
+                                  "00222129300-12023903",
+                                  style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
