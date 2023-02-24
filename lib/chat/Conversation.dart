@@ -135,7 +135,7 @@ class _inputField extends State<inputField> {
       "time": Timestamp.now()
     });
     
-//     await FirebaseFirestore.instance.collection('message').update({
+//     await FirebaseFirestore.instance.collection('message').where('to',isEqualTo,widget.to).update({
 //       "last_message": Timestamp.now()
 //     }).then((result){
 //       print("new USer true");
