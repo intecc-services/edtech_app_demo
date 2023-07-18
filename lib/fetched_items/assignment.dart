@@ -2,7 +2,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edtech_app_demo/fetched_items/firebase_service.dart';
 import 'package:edtech_app_demo/fetched_items/pdf_viewer.dart';
 import 'package:edtech_app_demo/shared/bottom_bar.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:edtech_app_demo/Landing_Page.dart';
+import 'dart:io';
+import 'dart:ffi';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path/path.dart' as Path;
+import 'dart:io';
+
+// import './UploadDialog.dart';
+import 'package:edtech_app_demo/shared/NavBar.dart';
+import 'package:edtech_app_demo/shared/bottom_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:edtech_app_demo/Calendar/Calendar.dart';
+import 'package:edtech_app_demo/Landing_Page.dart';
+import 'package:edtech_app_demo/TabBar/root.dart';
+import 'package:edtech_app_demo/attendance/attendance.dart';
+import 'package:edtech_app_demo/chat/Chats.dart';
+import 'package:edtech_app_demo/grades.dart';
+import 'package:edtech_app_demo/profile.dart';
+import 'package:edtech_app_demo/shared/theme_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import '../api/firebase_api.dart';
 
 class Assignments extends StatefulWidget {
   const Assignments({Key? key}) : super(key: key);
@@ -11,6 +40,8 @@ class Assignments extends StatefulWidget {
   State<Assignments> createState() => _MaterialsState();
 }
 
+String fileName = '';
+
 class _MaterialsState extends State<Assignments> {
   FirebaseServices firebaseServices = FirebaseServices();
 
@@ -18,6 +49,242 @@ class _MaterialsState extends State<Assignments> {
   void initState() {
     super.initState();
     //firebaseServices.getTitles();
+  }
+
+  final TextEditingController _textEditingController1 = TextEditingController();
+  final TextEditingController _textEditingController2 = TextEditingController();
+  final TextEditingController _textEditingController3 = TextEditingController();
+//Function to upload assignment
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          bool isChecked = false;
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _textEditingController1,
+                          validator: (value) {
+                            return value!.isNotEmpty
+                                ? null
+                                : "Please enter assignment name";
+                          },
+                          decoration:
+                              InputDecoration(hintText: "Assignment name"),
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _textEditingController2,
+                          validator: (value) {
+                            return value!.isNotEmpty
+                                ? null
+                                : "Please enter the topic";
+                          },
+                          decoration:
+                              InputDecoration(hintText: "Assignment Topic"),
+                        ),
+                        SizedBox(
+                          height: 1,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _textEditingController3,
+                          validator: (value) {
+                            return value!.isNotEmpty
+                                ? null
+                                : "Please enter assigner's name";
+                          },
+                          decoration:
+                              InputDecoration(hintText: "Assigner's name"),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                          onPressed: selectFile,
+                          child: Text("Select File"),
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xff7678ED),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            textStyle: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          fileName,
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Ready to Upload?"),
+                            Checkbox(
+                                value: isChecked,
+                                onChanged: (checked) {
+                                  setState(() {
+                                    isChecked = checked!;
+                                  });
+                                })
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        ElevatedButton(
+                          onPressed: uploadFile,
+                          child: Text(
+                            "Upload",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            primary: Colors.white.withOpacity(0.87),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            textStyle: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        uploadTask != null
+                            ? buildUploadStatus(uploadTask!)
+                            : Container(),
+                      ],
+                    )),
+              ),
+              title: Row(
+                children: [
+                  Text('Assignment Upload'),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        // Do something like updating SharedPreferences or User Settings etc.
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icon(Icons.close)),
+                ],
+              ),
+              actions: <Widget>[
+                InkWell(
+                  child: Text('OK   '),
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+        });
+  }
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+    final file1 = result.files.single;
+    setState(
+      () => file = File(path),
+    );
+    setState(() {
+      fileName = file1.name;
+    });
+    //  setState() {
+    //    pickedfile = result.files.first;
+    // }
+  }
+
+  void updateName() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return; // User pressed cancel
+
+    final file = result.files.single;
+    setState(() {
+      fileName = file.name; // Update fileName with selected file name
+    });
+  }
+
+  double uploadProgress = 0;
+
+  Future uploadFile() async {
+    if (file == null) return;
+
+    final fileName = Path.basename(file!.path);
+    final destination = 'files/$fileName';
+
+    uploadTask = FirebaseApi.uploadFile(destination, file!);
+    setState(() {});
+
+    if (uploadTask == null) return;
+
+    uploadTask!.snapshotEvents.listen((TaskSnapshot snapshot) {
+      final progress = snapshot.bytesTransferred / snapshot.totalBytes;
+      setState(() {
+        uploadProgress = progress;
+      });
+    });
+
+    final snapshot = await uploadTask!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+
+    print('Download-Link: $urlDownload');
+
+    // Upload file data to Cloud Firestore
+    final assignmentName = _textEditingController1.text;
+    final assignmentTopic = _textEditingController2.text;
+    final assignerName = _textEditingController3.text;
+
+    final data = {
+      'assignmentName': assignmentName,
+      'assignmentTopic': assignmentTopic,
+      'assignerName': assignerName,
+      'fileUrl': urlDownload,
+    };
+
+    FirebaseFirestore.instance.collection('assignments').add(data);
+  }
+
+  Widget buildUploadStatus(UploadTask task) {
+    return StreamBuilder<TaskSnapshot>(
+      stream: task.snapshotEvents,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final snap = snapshot.data!;
+          final progress = snap.bytesTransferred / snap.totalBytes;
+          final percentage = (progress * 100).toStringAsFixed(2);
+
+          return Text(
+            '$percentage %',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          );
+        } else if (snapshot.hasError) {
+          return Text('Upload failed: ${snapshot.error}');
+        } else {
+          return const Text('Uploading...');
+        }
+      },
+    );
   }
 
   @override
@@ -112,7 +379,8 @@ class _MaterialsState extends State<Assignments> {
                                   borderRadius: BorderRadius.circular(
                                       30.0), // round the button shape
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
+                                  await showInformationDialog(context);
                                   // add your onPressed action here
                                   //add the dialog box here:
                                 },
@@ -192,17 +460,32 @@ class _MaterialsState extends State<Assignments> {
 //     ),
 //   );
 // }
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final TextEditingController _textEditingController1 = TextEditingController();
+final TextEditingController _textEditingController2 = TextEditingController();
+final TextEditingController _textEditingController3 = TextEditingController();
 
-class AssignmentCard extends StatelessWidget {
+class AssignmentCard extends StatefulWidget {
   Map<String, dynamic> assignment;
-  //final String title;
-  FirebaseServices firebaseServices = FirebaseServices();
 
   AssignmentCard({required this.assignment});
 
+  @override
+  State<AssignmentCard> createState() => _AssignmentCardState();
+}
+
+PlatformFile? pickedfile;
+File? file;
+UploadTask? uploadTask;
+
+class _AssignmentCardState extends State<AssignmentCard> {
+  //final String title;
+  FirebaseServices firebaseServices = FirebaseServices();
+
   void viewPDF(BuildContext context) async {
     //print("here");
-    String pdfURL = await firebaseServices.getPdfURL(assignment['title']);
+    String pdfURL =
+        await firebaseServices.getPdfURL(widget.assignment['title']);
     print("here");
     print(pdfURL);
     Navigator.push(
@@ -214,7 +497,7 @@ class AssignmentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    if (assignment['title'] == null)
+    if (widget.assignment['title'] == null)
       return Container();
     else
       return Padding(
@@ -229,14 +512,14 @@ class AssignmentCard extends StatelessWidget {
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(assignment['title'],
+                  Text(widget.assignment['title'],
                       style: TextStyle(
                         color: Color(0xff3D348B),
                         fontSize: w * 0.047,
                         fontWeight: FontWeight.w700,
                       )),
                   SizedBox(height: h * 0.03),
-                  Text(assignment['topic'],
+                  Text(widget.assignment['topic'],
                       style: TextStyle(
                         color: Color(0xff3D348B),
                         fontSize: w * 0.04,
@@ -251,7 +534,7 @@ class AssignmentCard extends StatelessWidget {
                         size: w * 0.09,
                       ),
                       SizedBox(width: w * 0.03),
-                      Text(assignment['assignor'],
+                      Text(widget.assignment['assignor'],
                           style: TextStyle(
                             color: Color(0xff3D348B),
                             fontSize: w * 0.03,
@@ -277,18 +560,6 @@ class AssignmentCard extends StatelessWidget {
         ),
       );
   }
-}
 
 // class PDFViewerPage extends StatelessWidget {
-//   final String pdfURL;
-
-//   PDFViewerPage({required this.pdfURL});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('PDF Viewer')),
-//       body: PDFViewerScaffold(path: pdfURL),
-//     );
-//   }
-// }
+}

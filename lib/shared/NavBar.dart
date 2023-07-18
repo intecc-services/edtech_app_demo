@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
@@ -43,6 +44,11 @@ class NavBar extends StatelessWidget {
                 child: myButton('Exam Calendar', Icons.edit_calendar_outlined)),
             myButton('Announcements - Events', Icons.add_alert_rounded),
             myButton('Passing with QR code', Icons.qr_code),
+            GestureDetector(
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                },
+                child: myButton('Sign out', Icons.logout)),
           ],
         ),
       ),

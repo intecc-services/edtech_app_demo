@@ -23,6 +23,11 @@ class _LoginPageState extends State<LoginPage> {
     print("this is the user id: ${user?.uid}");
   }
 
+  void signOut() async {
+    await FirebaseAuth.instance.signOut();
+    print('User signed out');
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;

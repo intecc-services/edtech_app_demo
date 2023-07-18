@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Conversation extends StatefulWidget {
   final String? id;
   final String? myId;
-  const Conversation({Key? key, required this.id, required this.myId}) : super(key: key);
+  const Conversation({Key? key, required this.id, required this.myId})
+      : super(key: key);
   @override
   State<Conversation> createState() => _ConversationState();
 }
@@ -15,32 +16,37 @@ class _ConversationState extends State<Conversation> {
   String? myId;
   @override
   Widget build(BuildContext context) {
-    var firebaseStream = FirebaseFirestore.instance.collection("message").where("to",whereIn:["${widget.id}","${widget.myId}"]).snapshots();
+    var firebaseStream = FirebaseFirestore.instance
+        .collection("message")
+        .where("to", whereIn: ["${widget.id}", "${widget.myId}"]).snapshots();
     return Scaffold(
       body: StreamBuilder(
-          stream:firebaseStream ,
-          builder:(ctx, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          stream: firebaseStream,
+          builder: (ctx,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
             var len = snapshot.data?.docs.length;
-            if (len!=null)
-            {
+            if (len != null) {
               var docs = snapshot.data!.docs;
               List<ChatType> chatList = docs.map((e) {
                 var data = e.data();
                 return ChatType(
                     from: data['from'],
-                    to:data['to'],
-                    message:data['message'],
-                    time:data['time']);
+                    to: data['to'],
+                    message: data['message'],
+                    time: data['time']);
               }).toList();
-              chatList = chatList.where((element) => (element.to==widget.id || element.from==widget.id)).toList();
-              chatList.sort((a,b){
-                var x =  a.time.compareTo(b.time);
-                return x==1?1:0;
+              chatList = chatList
+                  .where((element) =>
+                      (element.to == widget.id || element.from == widget.id))
+                  .toList();
+              chatList.sort((a, b) {
+                var x = a.time.compareTo(b.time);
+                return x == 1 ? 1 : 0;
               });
               int len2 = chatList.length;
               return Column(
@@ -75,7 +81,6 @@ class _ConversationState extends State<Conversation> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-
                           Expanded(
                             child: ListView.builder(
                                 itemCount: len2,
@@ -83,22 +88,30 @@ class _ConversationState extends State<Conversation> {
                                   // var doc = snapshot.data!.docs[index];
                                   // var data = doc.data();
                                   // print(data.toString());
-                                  return ChatBubble(chatList[index].from!=widget.myId?0:1, chatList[index].message, chatList[index].time);
+                                  return ChatBubble(
+                                      chatList[index].from != widget.myId
+                                          ? 0
+                                          : 1,
+                                      chatList[index].message,
+                                      chatList[index].time);
                                 }),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  inputField(id: widget.id,myId: widget.myId), //place to enter text
+                  Container(
+                    height: 60,
+                    child: inputField(id: widget.id, myId: widget.myId),
+                  ), //place to enter text
                 ],
               );
-            }//if statement
-            else{
+            } //if statement
+            else {
               return const Center(child: Text("Null Returned"));
             }
           }),
-    ) ;
+    );
   }
 }
 
@@ -106,7 +119,8 @@ class inputField extends StatefulWidget {
   final String? id;
   final String? myId;
   @override
-  const inputField({Key? key, required this.id, required this.myId}) : super(key: key);
+  const inputField({Key? key, required this.id, required this.myId})
+      : super(key: key);
   State<inputField> createState() => _inputField();
 }
 
@@ -115,30 +129,42 @@ class _inputField extends State<inputField> {
   void sendMessage() async {
     // print(message);
     await FirebaseFirestore.instance.collection('message').add({
-      "message":message,
-      "to":widget.id,
-      "from":widget.myId,
-      "time":Timestamp.now()
+      "message": message,
+      "to": widget.id,
+      "from": widget.myId,
+      "time": Timestamp.now()
     });
+    
+//     await FirebaseFirestore.instance.collection('message').where('to',isEqualTo,widget.to).update({
+//       "last_message": Timestamp.now()
+//     }).then((result){
+//       print("new USer true");
+//     }).catchError((onError){
+//      print("onError");
+//     });
+    
     _controller.clear();
   }
+
   String message = "";
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 60,
-          child: Container(
-            color: Colors.grey[300],
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    return Container(
+      color: Colors.grey[300],
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width * 0.8,
             child: CupertinoTextField(
               controller: _controller,
               padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               placeholder: 'Message...',
-                onChanged: (value){
-                  message= value;
-                },
+              onChanged: (value) {
+                message = value;
+              },
               decoration: BoxDecoration(
                   color: Color(0xff7678ED),
                   borderRadius: BorderRadius.circular(20)),
@@ -148,19 +174,24 @@ class _inputField extends State<inputField> {
                   fontSize: 14),
             ),
           ),
-        )
-      ],
+          IconButton(
+              onPressed: () {
+                sendMessage();
+              },
+              icon: Icon(Icons.send))
+        ],
+      ),
     );
   }
 }
 
-class ChatType{
+class ChatType {
   String? from;
   String? to;
   String? message;
   Timestamp time = Timestamp.now();
 
-  ChatType({from,to,message,time}){
+  ChatType({from, to, message, time}) {
     this.from = from;
     this.to = to;
     this.time = time;
@@ -168,8 +199,7 @@ class ChatType{
   }
 }
 
-
-Widget ChatBubble(int side, String? text,Timestamp time) {
+Widget ChatBubble(int side, String? text, Timestamp time) {
   return Row(
     mainAxisAlignment:
         side == 0 ? MainAxisAlignment.start : MainAxisAlignment.end,
